@@ -9,40 +9,27 @@ mod tests {
     use MockKDTree;
     use KDTree;
     use SearchableElement;
+    use MockEntity;
 
     #[test]
     fn it_works() {
         assert_eq!(2 + 2, 4);
     }
 
-    struct MyEntity {
-        id: u32,
-        txt: String,
-    }
-
-    impl SearchableElement for MyEntity {
-        fn as_searchable_text(&self) -> String {
-            return self.txt.to_string();
-        }
-
-        fn get_id(&self) -> u32 {
-            return self.id;
-        }
-    }
 
 
     #[test]
     fn mock_works() {
         let tree = MockKDTree::build(&vec![
-            MyEntity {
+            MockEntity {
                 id: 1,
                 txt: "Apple".to_string(),
             },
-            MyEntity {
+            MockEntity {
                 id: 2,
                 txt: "Banana".to_string(),
             },
-            MyEntity {
+            MockEntity {
                 id: 3,
                 txt: "Lettuce".to_string(),
             },
@@ -65,15 +52,15 @@ mod tests {
     #[test]
     fn mock_case_insensitive_works() {
         let tree = MockKDTree::build(&vec![
-            MyEntity {
+            MockEntity {
                 id: 1,
                 txt: "Apple".to_string(),
             },
-            MyEntity {
+            MockEntity {
                 id: 2,
                 txt: "Banana".to_string(),
             },
-            MyEntity {
+            MockEntity {
                 id: 3,
                 txt: "Lettuce".to_string(),
             },
@@ -96,6 +83,24 @@ mod tests {
         assert_eq!(second_result[1].index, 1);
     }
 }
+
+
+
+pub struct MockEntity {
+    id: u32,
+    txt: String,
+}
+
+impl SearchableElement for MockEntity {
+    fn as_searchable_text(&self) -> String {
+        return self.txt.to_string();
+    }
+
+    fn get_id(&self) -> u32 {
+        return self.id;
+    }
+}
+
 
 
 pub trait SearchableElement {
