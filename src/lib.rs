@@ -87,8 +87,8 @@ mod tests {
 
 
 pub struct MockEntity {
-    id: u32,
-    txt: String,
+    pub id: u32,
+    pub txt: String,
 }
 
 impl SearchableElement for MockEntity {
@@ -110,8 +110,8 @@ pub trait SearchableElement {
 
 #[derive(Debug, Eq, PartialEq, PartialOrd)]
 pub struct SearchResult {
-    id: u32,
-    index: usize,
+    pub id: u32,
+    pub index: usize,
 }
 
 
