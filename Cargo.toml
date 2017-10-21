@@ -1,0 +1,6 @@
+[package]
+name = "suffix"
+version = "0.1.0"
+authors = ["nephtys <christopher.kaag@gmail.com>"]
+
+[dependencies]
