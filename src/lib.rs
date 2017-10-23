@@ -1,5 +1,10 @@
 #![allow(dead_code)]
 
+
+#[macro_use]
+pub extern crate serde_derive;
+
+
 use std::collections::HashMap;
 use std::cmp::Ordering;
 
@@ -8,7 +13,6 @@ mod tests {
 
     use MockKDTree;
     use KDTree;
-    use SearchableElement;
     use MockEntity;
 
     #[test]
@@ -20,20 +24,23 @@ mod tests {
 
     #[test]
     fn mock_works() {
-        let tree = MockKDTree::build(&vec![
-            MockEntity {
-                id: 1,
-                txt: "Apple".to_string(),
-            },
-            MockEntity {
-                id: 2,
-                txt: "Banana".to_string(),
-            },
-            MockEntity {
-                id: 3,
-                txt: "Lettuce".to_string(),
-            },
-        ], true);
+        let tree = MockKDTree::build(
+            &vec![
+                MockEntity {
+                    id: 1,
+                    txt: "Apple".to_string(),
+                },
+                MockEntity {
+                    id: 2,
+                    txt: "Banana".to_string(),
+                },
+                MockEntity {
+                    id: 3,
+                    txt: "Lettuce".to_string(),
+                },
+            ],
+            true,
+        );
 
         let first_result = tree.search("an");
         assert_eq!(first_result.len(), 1);
@@ -51,20 +58,23 @@ mod tests {
 
     #[test]
     fn mock_case_insensitive_works() {
-        let tree = MockKDTree::build(&vec![
-            MockEntity {
-                id: 1,
-                txt: "Apple".to_string(),
-            },
-            MockEntity {
-                id: 2,
-                txt: "Banana".to_string(),
-            },
-            MockEntity {
-                id: 3,
-                txt: "Lettuce".to_string(),
-            },
-        ], false);
+        let tree = MockKDTree::build(
+            &vec![
+                MockEntity {
+                    id: 1,
+                    txt: "Apple".to_string(),
+                },
+                MockEntity {
+                    id: 2,
+                    txt: "Banana".to_string(),
+                },
+                MockEntity {
+                    id: 3,
+                    txt: "Lettuce".to_string(),
+                },
+            ],
+            false,
+        );
 
         let first_result = tree.search("A");
         assert_eq!(first_result.len(), 2);
@@ -85,7 +95,7 @@ mod tests {
 }
 
 
-
+#[derive(Debug, Serialize, Deserialize)]
 pub struct MockEntity {
     pub id: u32,
     pub txt: String,
@@ -134,7 +144,7 @@ pub trait KDTree {
     fn is_case_sensitive(&self) -> bool;
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct MockKDTree {
     elements: HashMap<u32, String>,
     case_sensitive: bool,
